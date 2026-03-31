@@ -1,0 +1,45 @@
+Metadata-Version: 2.4
+Name: codesage
+Version: 0.2.1
+Summary: CodeSage starter: ingestion, parsing, embeddings (API only)
+Author: CodeSage
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn[standard]>=0.27
+Requires-Dist: pydantic>=2.6
+Requires-Dist: pydantic-settings>=2.2
+Requires-Dist: GitPython>=3.1
+Requires-Dist: SQLAlchemy>=2.0
+Requires-Dist: numpy>=1.24
+Provides-Extra: embeddings
+Requires-Dist: transformers>=4.38; extra == "embeddings"
+Requires-Dist: torch>=2.1; extra == "embeddings"
+
+# CodeSage (Starter) — Ingestion + Parsing + Embeddings (API Only)
+
+This repo is a working starting point for CodeSage implementing:
+- Repository ingestion (clone/pull)
+- Parsing (Python AST → functions/classes/modules)
+- Code representation & embedding layer (function-level)
+- FastAPI endpoints to ingest, browse, embed, delete
+
+## Quickstart
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows PS: .\.venv\Scripts\Activate.ps1
+pip install -U pip
+pip install -e .
+uvicorn codesage.api.main:app --reload
+```
+Swagger: http://127.0.0.1:8000/docs
+
+### Enable transformer embeddings (optional)
+```bash
+pip install -e ".[embeddings]"
+```
+
+## Embedding endpoints
+- POST /embed/repos/{repo_id}
+- GET /repos/{repo_id}/embeddings
+- GET /units/{unit_id}/embedding
